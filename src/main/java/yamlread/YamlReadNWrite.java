@@ -2,28 +2,38 @@ package yamlread;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.yaml.snakeyaml.Yaml;
 
+
+
 public class YamlReadNWrite {
-	
-	/*
-	public static void main(String[] args) throws IOException {
-	      Yaml yaml = new Yaml();
-	      try (InputStream in = YamlReadNWrite .class.getResourceAsStream("/person.yml")) {
-	          Object obj = yaml.load(in);
-	          System.out.println("Loaded object type:" + obj.getClass());
-	          System.out.println(obj);
-	      }
-	  }
-	*/
-	
+
+
+	private static Yaml yaml;
+
 	public static void main(String[] args) {
-	Yaml yaml = new Yaml();
-	InputStream inputStream = yaml.getClass().getClassLoader().getResourceAsStream("person.yaml");
-	Map<String, Object> obj = (Map<String, Object>) yaml.load(inputStream);
-	System.out.println(obj);
+		yaml = new Yaml();
+		InputStream inputStream = yaml.getClass().getClassLoader().getResourceAsStream("master.yaml");
+		Map<String, Object> obj_1 = (Map<String, Object>) yaml.load(inputStream);
+	
+		
+
+
+		InputStream input2 = yaml.getClass().getClassLoader().getResourceAsStream("Second.yaml");
+		Map<String, Object> obj_2 = (Map<String, Object>) yaml.load(input2);
+
+		for (Map.Entry n : obj_2.entrySet()) {
+			obj_1.replace((String) n.getKey(), n.getValue());
+
+		}
+		System.out.println(obj_1);
 
 	}
 }
